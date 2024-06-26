@@ -67,6 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 新增员工
+     *
      * @param employeeDTO
      * @return
      */
@@ -92,6 +93,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 分页查询
+     *
      * @param employeePageQueryDTO
      * @return
      */
@@ -101,6 +103,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
         Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    @Override
+    public void status(int status, Long id) {
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .updateTime(LocalDateTime.now())
+                .updateUser(BaseContext.getCurrentId())
+                .build();
+        employeeMapper.update(employee);
     }
 
 }
