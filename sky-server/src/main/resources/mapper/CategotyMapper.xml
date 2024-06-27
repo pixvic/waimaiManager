@@ -3,10 +3,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sky.mapper.CategoryMapper">
 
-    <select id="getByNameOrType" resultType="com.sky.dto.CategoryDTO">
+    <select id="getByNameOrType" resultType="com.sky.entity.Category">
         select * from category
         <where>
-            <if test="name != null">name = #{name}</if>
+            <if test="name != null">name like concat('%', #{name}, '%')</if>
             <if test="type != null">and type = #{type}</if>
         </where>
         order by sort desc
