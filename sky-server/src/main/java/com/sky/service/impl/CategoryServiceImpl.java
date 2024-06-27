@@ -70,4 +70,16 @@ public class CategoryServiceImpl implements CategoryService {
         BeanUtils.copyProperties(categoryDTO, category);
         categoryMapper.update(category);
     }
+
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        // 设置需要更新的参数
+        Category category = Category.builder()
+                .id(id) // 设置查询需要的ID
+                .status(status) // 设置需要改变的分类状态
+                .updateTime(LocalDateTime.now()) // 设置更新时间
+                .updateUser(BaseContext.getCurrentId()) // 设置执行更新操作的员工
+                .build();
+        categoryMapper.update(category);
+    }
 }
