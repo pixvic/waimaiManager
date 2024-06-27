@@ -52,14 +52,14 @@ public class AutoFillAspect {
 
         // 为当前被拦截的公共参数赋值
         try {
-            // 不论是插入还是更新操作都需要执行更新时间与更新用户
+            // 不论是插入还是修改都需要改变修改时间与修改人
             // 通过反射获取对象的方法
             Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
             Method setUpdateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER, Long.class);
             // 通过反射为对象赋值
             setUpdateTime.invoke(entity, now);
             setUpdateUser.invoke(entity, id);
-            // 如果是插入操作则执行创建方法
+            // 如果是插入则还需要添加创建人与创建时间
             if (value == OperationType.INSERT) {
                 // 通过反射获取对象的方法
                 Method setCreateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_TIME, LocalDateTime.class);
