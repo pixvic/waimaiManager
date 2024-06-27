@@ -14,4 +14,10 @@ public interface CategoryMapper {
      * @return
      */
     Page<Category> getByNameOrType(Category categoryDTO);
+
+    /**
+     * 新增分类新增分类
+     * @param category
+     */
+    void addCategory(Category category);
 }
