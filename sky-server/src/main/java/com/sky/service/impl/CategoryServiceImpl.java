@@ -2,16 +2,21 @@ package com.sky.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.CategoryDTO;
 import com.sky.dto.CategoryPageQueryDTO;
 import com.sky.entity.Category;
+import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.CategoryMapper;
+import com.sky.mapper.DishMapper;
+import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.CategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +26,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Autowired
+    private DishMapper dishMapper;
+
+    @Autowired
+    private SetmealMapper setmealMapper;
 
     @Override
     public PageResult getByPage(CategoryPageQueryDTO categoryPageQueryDTO) {
@@ -52,7 +63,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .createUser(BaseContext.getCurrentId()) // 设置创建分类的员工
                 .updateTime(LocalDateTime.now()) // 设置更新时间
                 .updateUser(BaseContext.getCurrentId()) // 设置执行更新时间的员工
-                .status(1) // 设置分类是否启用
+                .status(0) // 设置分类是否启用
                 .build();
         // 复制信息
         BeanUtils.copyProperties(categoryDTO, category);
@@ -85,6 +96,18 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(Long id) {
+        // 查询该分类下有没有菜品，有菜品则不允许删除分类
+        Long dishCount = dishMapper.getByCategoryId(id);
+        if (dishCount > 0) {
+            throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_DISH);
+        }
+        // 查询该分类下有没有套餐，有套餐则不允许删除分类
+        Long setmealCount = setmealMapper.getByCategoryId(id);
+        if (setmealCount > 0) {
+            throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_SETMEAL);
+        }
+        // 删除分类
         categoryMapper.delete(id);
+
     }
 }
