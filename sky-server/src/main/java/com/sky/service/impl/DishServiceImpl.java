@@ -61,4 +61,15 @@ public class DishServiceImpl implements DishService {
         Page<DishVO> page = dishMapper.pageQuery(dishPageQueryDTO);
         return new PageResult(page.getTotal(), page.getResult());
     }
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public List<Dish> getById(Integer categoryId) {
+        List<Dish> dish = dishMapper.getById(categoryId);
+        return dish;
+    }
 }
