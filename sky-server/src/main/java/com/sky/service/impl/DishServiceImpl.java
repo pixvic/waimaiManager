@@ -72,4 +72,15 @@ public class DishServiceImpl implements DishService {
         List<Dish> dish = dishMapper.getByCategoryId(categoryId);
         return dish;
     }
+
+    /**
+     * 根据id查询菜品
+     * @param id
+     * @return
+     */
+    @Override
+    public Dish getById(Long id) {
+        Dish dish = dishMapper.getById(id);
+        return dish;
+    }
 }
