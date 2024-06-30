@@ -87,7 +87,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void delete(Long id) {
         // 查询该分类下有没有菜品，有菜品则不允许删除分类
-        Long dishCount = dishMapper.getByCategoryId(id);
+        Long dishCount = (long) dishMapper.getByCategoryId(id).size();
         if (dishCount > 0) {
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_DISH);
         }

@@ -18,8 +18,8 @@ public interface DishMapper {
      * 根据分类ID查询该分类下的所有菜品
      * @param categoryId
      */
-    @Select("select count(*) from dish where category_id = #{categoryId}")
-    Long getByCategoryId(Long categoryId);
+    @Select("select * from dish where category_id = #{categoryId}")
+    List<Dish> getByCategoryId(Long categoryId);
 
     /**
      * 新增菜品
@@ -34,12 +34,4 @@ public interface DishMapper {
      * @return
      */
     Page<DishVO> pageQuery(DishPageQueryDTO dishPageQueryDTO);
-
-    /**
-     * 根据分类id查询菜品
-     * @param categoryId
-     * @return
-     */
-    @Select("select * from dish where category_id = #{categoryId}")
-    List<Dish> getById(Integer categoryId);
 }
