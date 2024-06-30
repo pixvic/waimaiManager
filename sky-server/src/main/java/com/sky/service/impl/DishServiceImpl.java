@@ -10,6 +10,7 @@ import com.sky.entity.DishFlavor;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
+import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
@@ -31,7 +32,7 @@ public class DishServiceImpl implements DishService {
     private DishFlavorMapper dishFlavorMapper;
 
     @Autowired
-    private SetmealMapper setmealMapper;
+    private SetmealDishMapper setmealDishMapper;
 
     /**
      * 新增菜品
@@ -116,7 +117,7 @@ public class DishServiceImpl implements DishService {
                 throw new DeletionNotAllowedException(MessageConstant.DISH_ON_SALE);
             }
             // 关联了套餐，不能删除
-            if (setmealMapper.getByCategoryId(dish.getCategoryId()) > 0) {
+            if (setmealDishMapper.getByDishId(dish.getCategoryId()).isEmpty()) {
                 throw new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
             }
         });
