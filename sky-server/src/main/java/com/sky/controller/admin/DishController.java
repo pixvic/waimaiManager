@@ -59,9 +59,9 @@ public class DishController {
 
     @PostMapping("/status/{status}")
     @ApiOperation("菜品起售、停售")
-    public Result status(@PathVariable int status, Long id) {
+    public Result StartOrStop(@PathVariable int status, Long id) {
         log.info("菜品起售、停售：{}", status);
-        dishService.status(status, id);
+        dishService.StartOrStop(status, id);
         return Result.success();
     }
 }

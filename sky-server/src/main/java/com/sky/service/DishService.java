@@ -41,5 +41,5 @@ public interface DishService {
      * 菜品起售、停售
      * @param status
      */
-    void status(int status, Long id);
+    void StartOrStop(int status, Long id);
 }

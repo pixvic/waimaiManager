@@ -89,7 +89,10 @@ public class DishServiceImpl implements DishService {
      * @param status
      */
     @Override
-    public void status(int status, Long id) {
-        dishMapper.status(status, id);
+    public void StartOrStop(int status, Long id) {
+        Dish dish = new Dish();
+        dish.setStatus(status);
+        dish.setId(id);
+        dishMapper.StartOrStop(dish);
     }
 }

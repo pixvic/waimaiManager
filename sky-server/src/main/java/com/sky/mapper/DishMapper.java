@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
+import java.util.Vector;
 
 @Mapper
 public interface DishMapper {
@@ -46,8 +47,9 @@ public interface DishMapper {
 
     /**
      * 菜品起售、停售
-     * @param status
+     * @param dish
      */
-    @Update("update dish set status = #{status} where id = #{id}")
-    void status(int status, Long id);
+    @Update("update dish set status = #{status}, update_user = #{updateUser}, update_time = #{updateTime} where id = #{id}")
+    @AutoFill(value = OperationType.UPDATE)
+    void StartOrStop(Dish dish);
 }
