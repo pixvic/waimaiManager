@@ -8,6 +8,6 @@ sky:
     password: pixvic
   alioss:
     endpoint: oss-cn-beijing.aliyuncs.com
-    access-key-id: LTAI5t5nZ6iVrknzLXfnP6wJ
-    access-key-secret: DTUXQvnijUYrYnDtaNe3JMNoMmg5qK
-    bucket-name: pixvic
+    access-key-id: .
+    access-key-secret: .
+    bucket-name: .
