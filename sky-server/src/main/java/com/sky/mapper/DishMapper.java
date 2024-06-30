@@ -52,4 +52,10 @@ public interface DishMapper {
     @Update("update dish set status = #{status}, update_user = #{updateUser}, update_time = #{updateTime} where id = #{id}")
     @AutoFill(value = OperationType.UPDATE)
     void StartOrStop(Dish dish);
+
+    /**
+     * 批量删除菜品
+     * @param ids
+     */
+    void delete(List<Long> ids);
 }
