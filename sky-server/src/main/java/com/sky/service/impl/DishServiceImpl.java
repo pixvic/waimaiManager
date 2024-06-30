@@ -83,4 +83,13 @@ public class DishServiceImpl implements DishService {
         Dish dish = dishMapper.getById(id);
         return dish;
     }
+
+    /**
+     * 菜品起售、停售
+     * @param status
+     */
+    @Override
+    public void status(int status, Long id) {
+        dishMapper.status(status, id);
+    }
 }

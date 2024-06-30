@@ -36,4 +36,10 @@ public interface DishService {
      * @return
      */
     Dish getById(Long id);
+
+    /**
+     * 菜品起售、停售
+     * @param status
+     */
+    void status(int status, Long id);
 }
